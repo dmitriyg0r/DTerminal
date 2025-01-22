@@ -1,0 +1,7 @@
+paramiko==3.4.0
+textual==0.52.1
+prompt_toolkit==3.0.43
+pysftp==0.2.9
+PyQt6==6.6.1
+PyQt6-Qt6==6.6.1
+PyQt6-sip==13.6.0

@@ -1,0 +1,67 @@
+QMainWindow {
+    background-color: #2b2b2b;
+}
+
+QPushButton {
+    background-color: #365880;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 2px;
+}
+
+QPushButton:hover {
+    background-color: #4b7299;
+}
+
+QTreeWidget {
+    background-color: #2b2b2b;
+    color: #ffffff;
+    border: none;
+}
+
+QTreeWidget::item:selected {
+    background-color: #3c3f41;
+}
+
+QTabWidget::pane {
+    border: none;
+}
+
+QTabBar::tab {
+    background-color: #2b2b2b;
+    color: #ffffff;
+    padding: 5px 10px;
+    border: none;
+}
+
+QTabBar::tab:selected {
+    background-color: #3c3f41;
+}
+
+QMenuBar {
+    background-color: #2b2b2b;
+    color: white;
+}
+
+QMenuBar::item:selected {
+    background-color: #3c3f41;
+}
+
+QMenu {
+    background-color: #2b2b2b;
+    color: white;
+}
+
+QMenu::item:selected {
+    background-color: #3c3f41;
+}
+
+QStatusBar {
+    background-color: #2b2b2b;
+    color: white;
+}
+
+QSplitter::handle {
+    background-color: #3c3f41;
+} 
