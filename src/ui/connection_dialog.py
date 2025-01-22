@@ -9,9 +9,9 @@ class ConnectionDialog(QDialog):
         
         layout = QVBoxLayout(self)
         
-        # Название подключения
+        # Имя подключения
         name_layout = QHBoxLayout()
-        name_label = QLabel("Название:")
+        name_label = QLabel("Имя:")
         self.name_input = QLineEdit()
         name_layout.addWidget(name_label)
         name_layout.addWidget(self.name_input)
@@ -23,14 +23,7 @@ class ConnectionDialog(QDialog):
         host_layout.addWidget(host_label)
         host_layout.addWidget(self.host_input)
         
-        # Порт
-        port_layout = QHBoxLayout()
-        port_label = QLabel("Порт:")
-        self.port_input = QLineEdit("22")
-        port_layout.addWidget(port_label)
-        port_layout.addWidget(self.port_input)
-        
-        # Имя пользователя
+        # Пользователь
         username_layout = QHBoxLayout()
         username_label = QLabel("Пользователь:")
         self.username_input = QLineEdit()
@@ -45,50 +38,57 @@ class ConnectionDialog(QDialog):
         password_layout.addWidget(password_label)
         password_layout.addWidget(self.password_input)
         
-        # SSH ключ
+        # SSH ключ (опционально)
         key_layout = QHBoxLayout()
-        key_label = QLabel("SSH ключ:")
-        self.key_input = QLineEdit()
-        self.key_browse = QPushButton("Обзор")
-        self.key_browse.clicked.connect(self.browse_key)
+        key_label = QLabel("SSH ключ (опционально):")
+        self.key_file_input = QLineEdit()
+        browse_button = QPushButton("Обзор")
+        browse_button.clicked.connect(self.browse_key_file)
         key_layout.addWidget(key_label)
-        key_layout.addWidget(self.key_input)
-        key_layout.addWidget(self.key_browse)
+        key_layout.addWidget(self.key_file_input)
+        key_layout.addWidget(browse_button)
         
         # Кнопки
         buttons_layout = QHBoxLayout()
-        self.save_button = QPushButton("Сохранить")
-        self.cancel_button = QPushButton("Отмена")
-        self.save_button.clicked.connect(self.accept)
-        self.cancel_button.clicked.connect(self.reject)
-        buttons_layout.addWidget(self.save_button)
-        buttons_layout.addWidget(self.cancel_button)
+        ok_button = QPushButton("OK")
+        cancel_button = QPushButton("Отмена")
+        ok_button.clicked.connect(self.accept)
+        cancel_button.clicked.connect(self.reject)
+        buttons_layout.addWidget(ok_button)
+        buttons_layout.addWidget(cancel_button)
         
         # Добавляем все в основной layout
         layout.addLayout(name_layout)
         layout.addLayout(host_layout)
-        layout.addLayout(port_layout)
         layout.addLayout(username_layout)
         layout.addLayout(password_layout)
         layout.addLayout(key_layout)
         layout.addLayout(buttons_layout)
+        
+        # Устанавливаем фокус на первое поле
+        self.name_input.setFocus()
 
-    def browse_key(self):
-        filename, _ = QFileDialog.getOpenFileName(
+    def browse_key_file(self):
+        file_name, _ = QFileDialog.getOpenFileName(
             self,
             "Выберите SSH ключ",
             "",
             "Все файлы (*.*)"
         )
-        if filename:
-            self.key_input.setText(filename)
+        if file_name:
+            self.key_file_input.setText(file_name)
 
     def get_connection_data(self):
-        return {
+        data = {
             "name": self.name_input.text(),
             "host": self.host_input.text(),
-            "port": self.port_input.text(),
             "username": self.username_input.text(),
-            "password": self.password_input.text(),
-            "key_file": self.key_input.text()
-        } 
+            "password": self.password_input.text()
+        }
+        
+        # Добавляем путь к ключу только если он указан
+        key_file = self.key_file_input.text().strip()
+        if key_file:
+            data["key_file"] = key_file
+            
+        return data 
